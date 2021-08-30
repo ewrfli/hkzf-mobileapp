@@ -35,7 +35,18 @@ const tabItems = [
 
 export default class Home extends React.Component {
   state = {
-    selectedTab: this.props.location.pathname
+    selectedTab: this.props.location.pathname //默认选中的tabbar菜单项 和页面的url
+  }
+ 
+  componentDidUpdate(prevProps) { //使用componentDidUpdate钩子函数 要放在判断里 不然发生改变就执行这个钩子函数 从而一直循环递归
+    console.log(prevProps);
+    console.log(this.props);
+    if(prevProps.location.pathname !== this.props.location.pathname) {
+      //路由发生切换
+      this.setState({
+        selectedTab: this.props.location.pathname,
+      })
+    }
   }
 
   //使用map方法,遍历数据,渲染 Tabbar Item
@@ -49,7 +60,7 @@ export default class Home extends React.Component {
       selectedIcon={
         <i className={`iconfont ${item.icon}`} />
       }
-      selected={this.state.selectedTab === item.path}
+      selected={this.state.selectedTab === item.path} //高亮显示
 
       onPress={() => {
         this.setState({
@@ -66,29 +77,25 @@ export default class Home extends React.Component {
 
 
   render () {
+    console.log(this.props.location.pathname) // /home/profile     exact精确匹配
     return <div className="home">
       <Route exact path="/home" component={Index}></Route>
       <Route path="/home/list" component={HouseList}></Route>
       <Route path="/home/news" component={News}></Route>
       <Route path="/home/profile" component={Profile}></Route>
 
-
       {/* TabBar菜单 */}
-
       <div>
         <TabBar
           unselectedTintColor="#888"
           tintColor="#21b97a"
           barTintColor="white"
-          noRenderContent={true}
+          noRenderContent={true} //不渲染内容
         >
           {/* 抽离渲染的TabBarItem */}
           {this.renderTabBarItem()}
-
         </TabBar>
       </div>
-
-
     </div>
   }
 }
