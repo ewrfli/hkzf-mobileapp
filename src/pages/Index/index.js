@@ -7,6 +7,8 @@ import Nav3 from '../../assets/images/nav-3.png'
 import Nav4 from '../../assets/images/nav-4.png'
 // 导入样式文件
 import './index.scss'
+import { getCurrentCity } from '../../utils'
+
 //导航菜单数据
 const navs = [ 
   {
@@ -84,21 +86,24 @@ export default class Index extends React.Component {
     })
   }
 
-  componentDidMount () {
+  async componentDidMount () {
     this.getSwipers();
     this.getGroups();
     this.getNews();
 
     // window.addEventListener('touchmove', func, { passive: false 
     //通过ip定位当前城市名称
-    const curCity = new window.BMapGL.LocalCity()
-    curCity.get(async res => {
-      const result = await axios.get(`http://101.132.119.44:9090/area/info?name=${res.name}`) //只有北上广深有数据，当前没有默认上海
-      this.setState({
-        curCityName: result.data.body.label
+    // const curCity = new window.BMapGL.LocalCity()
+    // curCity.get(async res => {
+    //   const result = await axios.get(`http://101.132.119.44:9090/area/info?name=${res.name}`) //只有北上广深有数据，当前没有默认上海
+    //   this.setState({
+    //     curCityName: result.data.body.label
+    //   })
+    // })
+    const curCity = await getCurrentCity()
+       this.setState({
+        curCityName: curCity.label
       })
-    })
-    
   }
 
   // 渲染轮播图结构
