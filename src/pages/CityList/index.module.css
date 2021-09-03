@@ -1,0 +1,7 @@
+.cityList {
+  padding-top: 45px;
+  height: 100%;
+}
+.cityList :global(.am-navbar) {
+  margin-top: -45px ;
+}

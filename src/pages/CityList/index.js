@@ -2,7 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import { NavBar, Toast } from 'antd-mobile';
 import { AutoSizer, List } from 'react-virtualized';
+import NavHeader from '../../components/NavHeader'
 import './index.scss'
+// import styles from './index.module.css'
 import { getCurrentCity } from '../../utils'
 //res.data.body [{}, {}]
 //渲染城市列表数据格式 {a: [{},{}], b: [{}, {}] }  item["a"] = [{}, {}]
@@ -161,15 +163,8 @@ export default class CityList extends React.Component {
 
   render () {
     return (
-        <div className="citylist">
-          <NavBar
-            className="navbar"
-            mode="light"
-            icon={<i className="iconfont icon-back" />}
-            onLeftClick={() => this.props.history.go(-1)}
-          >
-            城市选择
-          </NavBar>
+        <div className="citylist"> 
+          <NavHeader>城市选择</NavHeader>
 
           {/* 城市列表 */}
           <AutoSizer>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import './index.scss'
+import NavHeader from '../../components/NavHeader'
+// import './index.scss'
+import styles from './index.module.css'
 export default class Map extends React.Component {
 
   componentDidMount() {
@@ -15,11 +17,16 @@ export default class Map extends React.Component {
 
   render () {
     return (
-      <Route>
-        <div className="map">
-          <div id="container"></div>
+        <div className={styles.map}>
+          <NavHeader
+            onLeftClick={() => {
+              this.props.history.go(-1)
+            }}
+          >
+            地图找房
+          </NavHeader>
+          <div id="container" className={styles.container}></div>
         </div>
-      </Route>
     )
   }
 }
